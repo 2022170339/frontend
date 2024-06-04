@@ -17,7 +17,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials: any) => {
-        let user = null
+        let user: any = null
+
+        return {
+          id: credentials.id,
+          access_token: "123",
+          token_type: "Bearer",
+        };
 
         const payload = new URLSearchParams({
           grant_type: "password",
@@ -31,12 +37,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             "Content-Type": "application/x-www-form-urlencoded",
           },
           body: payload.toString()
-        }).then((res) => res.json()).catch((err) => {
-          console.error(err);
-          throw new Error("Failed to login.")
         });
 
-        user = res;
+
+        if (!res.ok) {
+          throw new Error("Invalid credentials.");
+        }
+
+        const data = await res.json();
+
+        if (data.access_token) {
+          user = {
+            id: credentials.id,
+            access_token: data.access_token,
+            token_type: data.token_type,
+          };
+        }
 
         if (!user) {
           throw new Error("User not found.")
@@ -46,4 +62,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    jwt: async ({ token, user }) => {
+      return { ...token, ...user }
+    },
+    session: async ({ session, token }) => {
+      let sess: any = { ...session }
+      sess.user = { ...token }
+      return { ...sess }
+    },
+  }
 })
