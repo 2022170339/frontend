@@ -25,7 +25,7 @@ export default function Table({
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <tr className="cursor-pointer hover:opacity-70 active:opacity-80" onClick={() => {
+                        <tr key={user.id} className="cursor-pointer hover:opacity-70 active:opacity-80" onClick={() => {
                             if (selected === user.id) onUserSelected(null);
                             else onUserSelected(user.id);
                         }}>
