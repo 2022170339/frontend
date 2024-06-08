@@ -98,3 +98,30 @@ export async function updateEmployee(_: FormData, formData: FormData) {
     return data;
 }
 
+
+export async function deleteEmployee(id: number) {
+    const session = await auth() as any;
+
+    if (!session && !session.user) throw new Error("Unauthorized");
+
+    const accessToken = session.user.access_token;
+
+    if (!accessToken) throw new Error("Unauthorized");
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Authorization": `Bearer ${accessToken}`
+        }
+    })
+
+    console.log(res);
+
+    if (!res.ok) throw new Error("An error occurred while deleting an employee");
+
+    const data = await res.json();
+
+    console.log(JSON.stringify(data));
+
+    return data;
+}

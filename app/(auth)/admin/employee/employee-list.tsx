@@ -5,6 +5,7 @@ import AddUserModal from "./add-user-modal";
 import Table from "./table";
 import { Employee } from "../../../../types/employee";
 import EditUserModal from "./edit-user-modal";
+import { deleteEmployee } from "./action";
 
 
 export interface EmployeeListProps {
@@ -34,7 +35,9 @@ export default function EmployeeList({
                                 />
                             </div>
                             <div className="col-span-1">
-                                <button className="btn btn-error w-full btn-xs">Delete User</button>
+                                <button onClick={async () => {
+                                    await deleteEmployee(selected);
+                                }} className="btn btn-error w-full btn-xs">Delete User</button>
                             </div>
                         </>
                     )
