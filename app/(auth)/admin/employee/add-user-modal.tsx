@@ -1,9 +1,22 @@
 "use client"
 
 import { useRef } from "react";
+import { createEmployee } from './action';
+import { useFormState } from "react-dom";
+import { Employee } from "../../../../types/employee";
+import { PiIdentificationBadgeFill, PiLockKeyFill, PiUserFill } from "react-icons/pi";
 
-export default function AddUserModal() {
+export default function AddUserModal({
+    employees,
+    lastIdNumber
+}: {
+    employees: Employee[];
+    lastIdNumber: number;
+}) {
+
+    const [_, formAction] = useFormState(createEmployee, {});
     const modalRef = useRef<HTMLDialogElement>(null);
+
     return (
         <>
             <button onClick={() => modalRef?.current?.showModal()} className="btn btn-success w-full btn-xs">Add User</button>
@@ -11,21 +24,122 @@ export default function AddUserModal() {
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Add User</h3>
                     <p className="py-4">Please fill the form below to create a new user</p>
-                    <form method="dialog">
-                        <label className="flexf input input-bordered flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" /><path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" /></svg>
-                            <input type="text" className="grow" placeholder="Email" />
+                    <form action={formAction} method="dialog">
+                        <div className="mb-2">
+                            User Credentials
+                        </div>
+
+                        {/* ID Number */}
+                        <label className="input input-bordered input-sm input-disabled flex items-center gap-2 mb-2">
+                            <PiIdentificationBadgeFill />
+                            <input type="number" name="id_number" className="grow" value={lastIdNumber} readOnly required />
                         </label>
-                        <label className="input input-bordered flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-                            <input type="text" className="grow" placeholder="Username" />
+
+                        {/* Username */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            <PiUserFill />
+                            <input type="text" name="username" className="grow" placeholder="username" required />
                         </label>
-                        <label className="input input-bordered flex items-center gap-2 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
-                            <input type="password" className="grow" placeholder="Password" />
+
+                        {/* Password */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            <PiLockKeyFill />
+                            <input type="password" name="password" className="grow" placeholder="password" required />
                         </label>
+
+
+                        <div className="mt-4 mb-2">
+                            Employee Details
+                        </div>
+
+                        {/* First Name */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            First Name
+                            <input type="text" name="firstname" className="grow" placeholder="first name" required />
+                        </label>
+
+                        {/* Middle Initial */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            Middle Initial
+                            <input type="text" name="middlei" className="grow" placeholder="middle initial" required />
+                        </label>
+
+                        {/* Last Name */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            Last Name
+                            <input type="text" name="lastname" className="grow" placeholder="last name" required />
+                        </label>
+
+                        {/* Address */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            Address
+                            <input type="text" name="address" className="grow" placeholder="address" required />
+                        </label>
+
+                        {/* Gender */}
+                        <select name="gender" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                            <option disabled selected>gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Others">Others</option>
+                        </select>
+
+                        {/* Birthday */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            <input type="date" name="birthday" className="grow" placeholder="birthday" required />
+                        </label>
+
+                        {/* Phone Number */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            Phone Number
+                            <input type="text" name="phone_number" className="grow" placeholder="phone number" required />
+                        </label>
+
+                        {/* Employment Status */}
+                        <select name="employment_status" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                            <option disabled selected>employment status</option>
+                            <option value="Regular">Regular</option>
+                            <option value="Part Time">Part Time</option>
+                            <option value="Contractual">Contractual</option>
+                        </select>
+
+                        {/* Position */}
+                        <select name="position" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                            <option disabled selected>position</option>
+                            <option value="Administrator">Administrator</option>
+                            <option value="Chief Executive Officer">Chief Executive Officer</option>
+                            <option value="Chief Finance Officer">Chief Finance Officer</option>
+                            <option value="Chief Marketing Officer">Chief Marketing Officer</option>
+                            <option value="IT Operations and Systems">IT Operations and Systems</option>
+                            <option value="HR Manager">HR Manager</option>
+                            <option value="HR Team Leader">HR Team Leader</option>
+                            <option value="HR Rank and File">HR Rank and File</option>
+                            <option value="Accounting Head">Accounting Head</option>
+                            <option value="Payroll Manager">Payroll Manager</option>
+                            <option value="Payroll Rank and File">Payroll Rank and File</option>
+                            <option value="Account Manager">Account Manager</option>
+                            <option value="Account Team Leader">Account Team Leader</option>
+                            <option value="Account Rank and File">Account Rank and File</option>
+                        </select>
+
+                        {/* Supervisor ID */}
+                        <select name="supervisor_id" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                            <option disabled selected>supervisor</option>
+                            {
+                                employees.map(employee => (
+                                    <option key={employee.id} value={employee.id}>{employee.firstname} {employee.lastname}</option>
+                                ))
+                            }
+                        </select>
+
+                        {/* Basic Salary */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            Basic Salary
+                            <input type="number" name="basic_salary" className="grow" placeholder="basic salary" required />
+                        </label>
+
                         <div className="modal-action">
-                            <button className="btn btn-success">Add User</button>
+                            <button className="btn btn-success">Create Employee</button>
                             <button onClick={() => modalRef?.current?.close()} className="btn btn-error">Cancel</button>
                         </div>
                     </form>

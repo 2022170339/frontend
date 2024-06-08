@@ -15,11 +15,13 @@ export default function EmployeeList({
 }: EmployeeListProps) {
     const [selected, setSelected] = useState<number | null>(null);
 
+    const largestIdNumber = employees.map(employee => employee.id_number).sort((a, b) => b - a)[0];
+
     return (
         <div suppressHydrationWarning>
             <div className="grid grid-cols-6 w-full items-end justify-end gap-2 sticky top-0 z-10 shadow-md bg-base-100 py-2">
                 <div className="col-span-1">
-                    <AddUserModal />
+                    <AddUserModal lastIdNumber={largestIdNumber + 1} employees={employees} />
                 </div>
                 {
                     selected && (
