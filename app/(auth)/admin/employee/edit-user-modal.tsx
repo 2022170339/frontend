@@ -1,52 +1,53 @@
 "use client"
 
 import { useRef } from "react";
-import { createEmployee } from './action';
+import { updateEmployee } from './action';
 import { useFormState } from "react-dom";
-import { Employee } from "../../../../types/employee";
-import { PiCalendar, PiIdentificationBadgeFill, PiIdentificationCardFill, PiLockKeyFill, PiMapPinAreaFill, PiMoneyFill, PiPhoneFill, PiUserFill } from "react-icons/pi";
+import { Employee, UpdateEmployee } from "../../../../types/employee";
+import { PiCalendar, PiIdentificationBadgeFill, PiIdentificationCardFill, PiMapPinAreaFill, PiMoneyFill, PiPhoneFill, PiUserFill } from "react-icons/pi";
+import { useForm } from "react-hook-form";
 
-export default function AddUserModal({
+export default function EditUserModal({
+    selectedEmployee,
     employees,
-    lastIdNumber
 }: {
+    selectedEmployee: Employee | null;
     employees: Employee[];
-    lastIdNumber: number;
 }) {
-
-    const [_, formAction] = useFormState(createEmployee, {});
+    const [_, formAction] = useFormState(updateEmployee, {});
     const modalRef = useRef<HTMLDialogElement>(null);
+
+    const {
+        register
+    } = useForm<UpdateEmployee>({
+        defaultValues: {
+            ...selectedEmployee
+        }
+    });
 
     return (
         <>
-            <button onClick={() => modalRef?.current?.showModal()} className="btn btn-success w-full btn-xs">Add User</button>
+            <button onClick={() => {
+                if (selectedEmployee) {
+                    modalRef?.current?.showModal();
+                }
+            }} className="btn btn-warning w-full btn-xs">Edit User</button>
             <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg">Add User</h3>
+                    <h3 className="font-bold text-lg">Edit User</h3>
                     <p className="py-4">Please fill the form below to create a new user</p>
                     <form action={formAction} method="dialog">
                         <div className="mb-2">
                             User Credentials
                         </div>
 
+                        <input type="number" className="grow" readOnly {...register('id')} hidden />
+
                         {/* ID Number */}
                         <label className="input input-bordered input-sm input-disabled flex items-center gap-2 mb-2">
                             <PiIdentificationBadgeFill />
-                            <input type="number" name="id_number" className="grow" value={lastIdNumber} readOnly required />
+                            <input type="number" className="grow" readOnly {...register('id_number')} />
                         </label>
-
-                        {/* Username */}
-                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
-                            <PiUserFill />
-                            <input type="text" name="username" className="grow" placeholder="username" required />
-                        </label>
-
-                        {/* Password */}
-                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
-                            <PiLockKeyFill />
-                            <input type="password" name="password" className="grow" placeholder="password" required />
-                        </label>
-
 
                         <div className="mt-4 mb-2">
                             Employee Details
@@ -55,29 +56,29 @@ export default function AddUserModal({
                         {/* First Name */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiIdentificationCardFill />
-                            <input type="text" name="firstname" className="grow" placeholder="first name" required />
+                            <input type="text" className="grow" placeholder="first name" {...register('firstname')} />
                         </label>
 
                         {/* Middle Initial */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiIdentificationCardFill />
-                            <input type="text" name="middlei" className="grow" placeholder="middle initial" required />
+                            <input type="text" className="grow" placeholder="middle initial" {...register('middlei')} />
                         </label>
 
                         {/* Last Name */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiIdentificationCardFill />
-                            <input type="text" name="lastname" className="grow" placeholder="last name" required />
+                            <input type="text" className="grow" placeholder="last name" {...register('lastname')} />
                         </label>
 
                         {/* Address */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiMapPinAreaFill />
-                            <input type="text" name="address" className="grow" placeholder="address" required />
+                            <input type="text" className="grow" placeholder="address" {...register('address')} />
                         </label>
 
                         {/* Gender */}
-                        <select name="gender" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                        <select {...register('gender')} className="select select-bordered w-full select-sm border rounded-lg my-1" >
                             <option disabled selected>gender</option>
                             <option value="M">Male</option>
                             <option value="F">Female</option>
@@ -86,17 +87,17 @@ export default function AddUserModal({
                         {/* Birthday */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiCalendar />
-                            <input type="date" name="birthday" className="grow" placeholder="birthday" required />
+                            <input type="date" className="grow" placeholder="birthday" {...register('birthday')} />
                         </label>
 
                         {/* Phone Number */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiPhoneFill />
-                            <input type="text" name="phone_number" className="grow" placeholder="phone number" required />
+                            <input type="text" className="grow" placeholder="phone number" {...register('phone_number')} />
                         </label>
 
                         {/* Employment Status */}
-                        <select name="employment_status" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                        <select {...register('employment_status')} className="select select-bordered w-full select-sm border rounded-lg my-1">
                             <option disabled selected>employment status</option>
                             <option value="Regular">Regular</option>
                             <option value="Part Time">Part Time</option>
@@ -104,7 +105,7 @@ export default function AddUserModal({
                         </select>
 
                         {/* Position */}
-                        <select name="position" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                        <select {...register('position')} className="select select-bordered w-full select-sm border rounded-lg my-1">
                             <option disabled selected>position</option>
                             <option value="Chief Executive Officer">Chief Executive Officer</option>
                             <option value="Chief Operating Officer">Chief Operating Officer</option>
@@ -124,7 +125,7 @@ export default function AddUserModal({
                         </select>
 
                         {/* Supervisor ID */}
-                        <select name="supervisor_id" className="select select-bordered w-full select-sm border rounded-lg my-1" required>
+                        <select {...register('supervisor_id')} className="select select-bordered w-full select-sm border rounded-lg my-1">
                             <option disabled selected>supervisor</option>
                             {
                                 employees.map(employee => (
@@ -136,11 +137,11 @@ export default function AddUserModal({
                         {/* Basic Salary */}
                         <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
                             <PiMoneyFill />
-                            <input type="number" name="basic_salary" className="grow" placeholder="basic salary" required />
+                            <input type="number" className="grow" placeholder="basic salary" {...register('basic_salary')} />
                         </label>
 
                         <div className="modal-action">
-                            <button type="submit" className="btn btn-success">Create Employee</button>
+                            <button type="submit" className="btn btn-warning">Update Employee</button>
                             <button type="button" onClick={() => modalRef?.current?.close()} className="btn btn-error">Cancel</button>
                         </div>
                     </form>
