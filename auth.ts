@@ -19,17 +19,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials: any) => {
         let user: any = null
 
-        return {
-          id: credentials.id,
-          access_token: "123",
-          token_type: "Bearer",
-        };
-
         const payload = new URLSearchParams({
           grant_type: "password",
           username: credentials.id,
           password: credentials.password,
         });
+
+        // ?grant_type=password&username=alice&password=alice-password
 
         const res = await fetch(`${process.env.BASE_URL!}login`, {
           method: "POST",
