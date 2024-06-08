@@ -3,8 +3,16 @@
 import { useState } from "react";
 import AddUserModal from "./add-user-modal";
 import Table from "./table";
+import { Employee } from "../../../../types/employee";
 
-export default function EmployeeList() {
+
+export interface EmployeeListProps {
+    employees: Employee[];
+}
+
+export default function EmployeeList({
+    employees
+}: EmployeeListProps) {
     const [selected, setSelected] = useState<number | null>(null);
 
     return (
@@ -27,6 +35,7 @@ export default function EmployeeList() {
                 }
             </div>
             <Table
+                employees={employees}
                 selected={selected}
                 onUserSelected={(id) => setSelected(id)}
             />
