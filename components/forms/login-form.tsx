@@ -1,22 +1,35 @@
 import { signIn } from "@/auth"
 
 export default function LoginForm() {
-    return <form className="p-2 rounded-lg w-fit h-fit" action={async (formData) => {
-        "use server"
-        await signIn("credentials", {
-            id: formData.get("id"),
-            password: formData.get("password"),
-            redirectTo: "/",
-        });
-    }}>
-        <label className="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" /></svg>
-            <input name="id" type="text" className="grow" placeholder="Employee ID" required />
-        </label>
-        <label className="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4 opacity-70"><path fillRule="evenodd" d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z" clipRule="evenodd" /></svg>
-            <input name="password" type="password" placeholder="Password" className="grow" required />
-        </label>
-        <button className="btn btn-primary w-full mt-2">Login</button>
-    </form>
+    return (
+        <div className="flex items-center justify-center h-screen w-screen ">
+            <form className="p-4 rounded-lg bg-white shadow-md" action={async (formData) => {
+                "use server"
+                await signIn("credentials", {
+                    id: formData.get("id"),
+                    password: formData.get("password"),
+                    redirectTo: "/",
+                });
+            }}>
+                <h2 className="text-2xl font-bold mb-4">Login</h2>
+                <div className="mb-4">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="id">
+                        Employee ID
+                    </label>
+                    <input name="id" type="text" className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline text-center" placeholder="Employee ID" required />
+                </div>
+                <div className="mb-6">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                        Password
+                    </label>
+                    <input name="password" type="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline text-center" placeholder="Password" required />
+                </div>
+                <div className="flex items-center justify-center">
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
 }
