@@ -11,7 +11,7 @@ export default async function Page() {
 
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.BASE_URL!}employee`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
         headers: {
             method: "GET",
             Authorization: `Bearer ${accessToken}`,

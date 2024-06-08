@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           password: credentials.password,
         });
 
-        const res = await fetch(`${process.env.BASE_URL!}login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
