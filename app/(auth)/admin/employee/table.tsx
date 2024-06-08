@@ -19,28 +19,6 @@ export default function Table({
                     <tr>
                         <th></th>
                         <th></th>
-                        {/* based the table from the employee type*/}
-                        {
-                            /*
-                            export type Employee = {
-                              id_number: number;
-                              firstname: string;
-                              lastname: string;
-                              middlei: string;
-                              address: string;
-                              password: string;
-                              gender: string;
-                              id: number;
-                              birthday: string;
-                              phone_number: string;
-                              employment_status: string;
-                              position: string;
-                              supervisor_id: string;
-                              basic_salary: number;
-                            }
-                            
-                             * */
-                        }
                         <th>First Name</th>
                         <th>Middle Initial</th>
                         <th>Last Name</th>
@@ -70,6 +48,13 @@ export default function Table({
                             <td>{employee.middlei}</td>
                             <td>{employee.lastname}</td>
                             <td>{employee.position}</td>
+                            <td>{employee.address}</td>
+                            <td>{employee.gender}</td>
+                            <td>{employee.birthday}</td>
+                            <td>{employee.phone_number}</td>
+                            <td>{employee.employment_status}</td>
+                            <td>{employee.supervisor_id}</td>
+                            <td>{employee.basic_salary}</td>
                         </tr>
                     ))}
                 </tbody>
@@ -77,11 +62,17 @@ export default function Table({
                     <tr>
                         <th></th>
                         <th></th>
-                        <th>Name</th>
+                        <th>First Name</th>
+                        <th>Middle Initial</th>
+                        <th>Last Name</th>
                         <th>Position</th>
-                        <th>Email</th>
-                        <th>Phone Number</th>
                         <th>Address</th>
+                        <th>Gender</th>
+                        <th>Birthday</th>
+                        <th>Phone Number</th>
+                        <th>Employment Status</th>
+                        <th>Supervisor ID</th>
+                        <th>Basic Salary</th>
                     </tr>
                 </tfoot>
             </table>
