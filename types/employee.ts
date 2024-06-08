@@ -32,3 +32,20 @@ export type CreateEmployee = {
   supervisor_id: string;
   basic_salary: number;
 };
+
+export type UpdateEmployee = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  middlei: string;
+  address: string;
+  id_number: number;
+  password: string;
+  gender: string;
+  birthday: string;
+  phone_number: string;
+  employment_status: string;
+  position: string;
+  supervisor_id: string;
+  basic_salary: number;
+};

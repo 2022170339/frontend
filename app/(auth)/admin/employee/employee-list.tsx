@@ -4,6 +4,7 @@ import { useState } from "react";
 import AddUserModal from "./add-user-modal";
 import Table from "./table";
 import { Employee } from "../../../../types/employee";
+import EditUserModal from "./edit-user-modal";
 
 
 export interface EmployeeListProps {
@@ -27,7 +28,10 @@ export default function EmployeeList({
                     selected && (
                         <>
                             <div className="col-span-1">
-                                <button className="btn btn-warning w-full btn-xs">Edit User</button>
+                                <EditUserModal
+                                    selectedEmployee={employees.find(employee => employee.id === selected) ?? null}
+                                    employees={employees}
+                                />
                             </div>
                             <div className="col-span-1">
                                 <button className="btn btn-error w-full btn-xs">Delete User</button>
