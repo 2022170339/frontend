@@ -65,12 +65,11 @@ export default function Table({
                                     <input type="checkbox" checked={selected === employee.id} className="checkbox checkbox-accent checkbox-xs" />
                                 </div>
                             </th>
-                            <th>{employee.id}</th>
-                            <td>{`${employee.firstName} ${employee.lastName}`}</td>
+                            <th>{employee.id_number}</th>
+                            <td>{employee.firstname}</td>
+                            <td>{employee.middlei}</td>
+                            <td>{employee.lastname}</td>
                             <td>{employee.position}</td>
-                            <td>{employee.email}</td>
-                            <td>{employee.phone}</td>
-                            <td>{employee.address}</td>
                         </tr>
                     ))}
                 </tbody>
