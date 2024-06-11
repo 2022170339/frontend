@@ -11,7 +11,7 @@ export type Employee = {
   phone_number: string;
   employment_status: string;
   position: string;
-  supervisor_id: string;
+  supervisor_id: number;
   basic_salary: number;
 }
 
@@ -29,7 +29,7 @@ export type CreateEmployee = {
   phone_number: string;
   employment_status: string;
   position: string;
-  supervisor_id: string;
+  supervisor_id: number;
   basic_salary: number;
 };
 
@@ -46,6 +46,6 @@ export type UpdateEmployee = {
   phone_number: string;
   employment_status: string;
   position: string;
-  supervisor_id: string;
+  supervisor_id: number;
   basic_salary: number;
 };

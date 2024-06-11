@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { updateEmployee } from './action';
 import { useFormState } from "react-dom";
 import { Employee, UpdateEmployee } from "../../../../types/employee";
-import { PiCalendar, PiIdentificationBadgeFill, PiIdentificationCardFill, PiMapPinAreaFill, PiMoneyFill, PiPhoneFill, PiUserFill } from "react-icons/pi";
+import { PiCalendar, PiIdentificationBadgeFill, PiIdentificationCardFill, PiLockKey, PiMapPinAreaFill, PiMoneyFill, PiPhoneFill } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 
 export default function EditUserModal({
@@ -47,6 +47,12 @@ export default function EditUserModal({
                         <label className="input input-bordered input-sm input-disabled flex items-center gap-2 mb-2">
                             <PiIdentificationBadgeFill />
                             <input type="number" className="grow" readOnly {...register('id_number')} />
+                        </label>
+
+                        {/* Passowrd */}
+                        <label className="input input-bordered input-sm flex items-center gap-2 mb-2">
+                            <PiLockKey />
+                            <input type="password" className="grow" placeholder="password" {...register('password')} />
                         </label>
 
                         <div className="mt-4 mb-2">

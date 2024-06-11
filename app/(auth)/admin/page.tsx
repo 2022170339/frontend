@@ -1,9 +1,14 @@
+import { redirect } from "next/navigation";
 import { auth } from "../../../auth";
 
 export default async function Page() {
-  const session = await auth();
+  const session = await auth() as any;
 
-  return <main className="flex min-h-screen w-full">
-    Hello User!
-  </main>
+  if (!session && !session.user) redirect('/login');
+
+  const accessToken = session.user.access_token;
+
+  if (!accessToken) redirect('/login');
+
+  redirect('/admin/employee');
 }

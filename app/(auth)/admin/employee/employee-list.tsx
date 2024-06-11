@@ -36,7 +36,9 @@ export default function EmployeeList({
                             </div>
                             <div className="col-span-1">
                                 <button onClick={async () => {
-                                    await deleteEmployee(selected);
+                                    await deleteEmployee(selected).then(() => {
+                                        window.location.reload();
+                                    });
                                 }} className="btn btn-error w-full btn-xs">Delete User</button>
                             </div>
                         </>

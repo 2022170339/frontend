@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache";
 import { auth } from "../../../../auth";
 import { CreateEmployee, UpdateEmployee } from "../../../../types/employee";
 
@@ -25,7 +26,7 @@ export async function createEmployee(_: FormData, formData: FormData) {
         phone_number: formData.get("phone_number") as string,
         employment_status: formData.get("employment_status") as string,
         position: formData.get("position") as string,
-        supervisor_id: formData.get("supervisor_id") as string,
+        supervisor_id: parseInt(formData.get("supervisor_id") as unknown as string) as number,
         basic_salary: parseInt(formData.get("basic_salary") as unknown as string) as number,
     }
 
@@ -44,7 +45,7 @@ export async function createEmployee(_: FormData, formData: FormData) {
 
     const data = await res.json();
 
-    console.log(JSON.stringify(data));
+    revalidatePath("/employee");
 
     return data;
 }
@@ -72,7 +73,7 @@ export async function updateEmployee(_: FormData, formData: FormData) {
         phone_number: formData.get("phone_number") as string,
         employment_status: formData.get("employment_status") as string,
         position: formData.get("position") as string,
-        supervisor_id: formData.get("supervisor_id") as string,
+        supervisor_id: parseInt(formData.get("supervisor_id") as unknown as string) as number,
         basic_salary: parseInt(formData.get("basic_salary") as unknown as string) as number,
     }
 
@@ -93,7 +94,7 @@ export async function updateEmployee(_: FormData, formData: FormData) {
 
     const data = await res.json();
 
-    console.log(JSON.stringify(data));
+    revalidatePath("/employee");
 
     return data;
 }
@@ -122,6 +123,8 @@ export async function deleteEmployee(id: number) {
     const data = await res.json();
 
     console.log(JSON.stringify(data));
+
+    revalidatePath("/employee");
 
     return data;
 }
