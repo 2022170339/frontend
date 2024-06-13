@@ -45,7 +45,7 @@ export async function createEmployee(_: FormData, formData: FormData) {
 
     const data = await res.json();
 
-    revalidatePath("/employee");
+    revalidatePath("/admin/employee");
 
     return data;
 }
@@ -94,7 +94,7 @@ export async function updateEmployee(_: FormData, formData: FormData) {
 
     const data = await res.json();
 
-    revalidatePath("/employee");
+    revalidatePath("/admin/employee");
 
     return data;
 }
@@ -124,7 +124,7 @@ export async function deleteEmployee(id: number) {
 
     console.log(JSON.stringify(data));
 
-    revalidatePath("/employee");
+    revalidatePath("/admin/employee");
 
     return data;
 }

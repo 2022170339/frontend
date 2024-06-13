@@ -14,7 +14,6 @@ export default async function Page() {
 
   if (!accessToken) redirect("/login");
 
-
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}payroll`, {
     headers: {
       method: "GET",
@@ -22,11 +21,13 @@ export default async function Page() {
     },
   });
 
+  let payroll: Payroll[];
+
   if (!res.ok) {
-    throw new Error('Failed to fetch payroll data');
+    payroll = [];
   }
 
-  const payroll: Payroll[] = await res.json();
+  payroll = await res.json();
 
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
     headers: {
@@ -37,14 +38,15 @@ export default async function Page() {
 
   const employees: Employee[] = await res2.json();
 
-  payroll.forEach(pay => {
-    const employee = employees.find(e => e.id === pay.employee_id);
-    pay.employee_name = `${employee?.firstname} ${employee?.lastname}`;
-  });
+  if (payroll.length > 0)
+    payroll.forEach(pay => {
+      const employee = employees.find(e => e.id === pay.employee_id);
+      pay.employee_name = `${employee?.firstname} ${employee?.lastname}`;
+    });
 
   return (
     <main className="flex flex-col min-h-screen w-full gap-4">
-      <PayrollList payroll={payroll} />
+      <PayrollList employees={employees} payroll={payroll} />
     </main>
   )
 };

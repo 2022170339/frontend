@@ -34,7 +34,7 @@ export default function Table({
                     </tr>
                 </thead>
                 <tbody>
-                    {payroll.map((payslip) => (
+                    {payroll.length > 0 && payroll.map((payslip) => (
                         <tr key={payslip.id} className="cursor-pointer hover:opacity-70 active:opacity-80" onClick={() => {
                             if (selected === payslip.id) onPayslipSelected(null);
                             else onPayslipSelected(payslip.id);
