@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../../auth";
 import Payslip from "../payslip";
 import { Payroll } from "../../../../../types/payroll";
-import { Employee } from "../../../../../types/employee";
 
 export default async function Page({
   params
@@ -37,7 +36,7 @@ export default async function Page({
 
   if (!payslip) redirect("/payroll");
 
-  const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
+  const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/${payslip.employee_id}`, {
     headers: {
       method: "GET",
       Authorization: `Bearer ${accessToken}`,
@@ -48,11 +47,11 @@ export default async function Page({
     throw new Error('Failed to fetch employee data');
   }
 
-  const employees: Employee[] = await res2.json();
-
-  const employee = employees.find(e => e.id === payslip.employee_id);
+  const employee = await res2.json();
 
   payslip.employee_name = `${employee?.firstname} ${employee?.lastname}`;
+  payslip.employee_position = employee?.position;
+  payslip.employee_id_number = employee?.id_number;
 
   return (
     <Payslip payslip={payslip} />

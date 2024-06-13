@@ -2,6 +2,9 @@ export type Payroll = {
     id: number;
     employee_id: number;
     employee_name?: string;
+    employee_position?: string;
+    employee_id_number?: number;
+    tax: number;
     start_date: string;
     end_date: string;
     gross_pay: number;

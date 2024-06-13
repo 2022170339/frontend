@@ -1,7 +1,12 @@
+"use client"
+
 import Link from "next/link";
 import { adminMenus } from "../../config";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar({ children }: { children: React.ReactNode }) {
+    const pathname = usePathname();
+
     return (
         <div className="drawer lg:drawer-open" suppressHydrationWarning>
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -12,7 +17,11 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                 <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
                     {adminMenus.map((item, index) => (
-                        <li key={index}>
+                        <li className={
+                            pathname.includes(item.href)
+                                ? "bg-base-100 rounded-lg"
+                                : ""
+                        } key={index}>
                             <Link href={item.href}>
                                 <div className="flex items-center">
                                     <div className="icon">

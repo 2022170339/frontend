@@ -4,10 +4,14 @@ import { useState } from "react";
 import Table from "./table";
 import { Payroll } from "@/types/payroll";
 import { useRouter } from "next/navigation";
+import GeneratePayrollModal from "./generate-payroll-modal";
+import { Employee } from "../../../../types/employee";
 
 export default function PayrollList({
+  employees,
   payroll
 }: {
+  employees: Employee[],
   payroll: Payroll[]
 }) {
   const [selected, setSelected] = useState<number | null>(null);
@@ -16,13 +20,14 @@ export default function PayrollList({
 
   return (
     <div className="flex flex-col w-full min-h-screen" suppressHydrationWarning>
-      <div className="grid grid-cols-6 w-full items-end justify-end gap-2 sticky top-0 z-10 shadow-md bg-base-100 py-2">
+      <div className="grid grid-cols-6 w-full items-end justify-end gap-2 sticky top-0 z-10 shadow-md bg-base-100 py-2 mb-2">
+        <GeneratePayrollModal employees={employees} />
         {
           selected && (
             <div className="col-span-1">
               <button onClick={() => {
                 router.push(`/admin/payroll/${selected}`)
-              }} className="btn btn-success w-full btn-xs">View Payslip</button>
+              }} className="btn btn-warning w-full btn-xs">View Payslip</button>
             </div>
           )
         }
