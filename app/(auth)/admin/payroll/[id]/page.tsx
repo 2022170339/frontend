@@ -1,11 +1,16 @@
 import { redirect } from "next/navigation";
-import { auth } from "../../../../auth";
-import { Payroll } from '@/types/payroll';
-import PayrollList from './payroll-list';
-import { Employee } from "../../../../types/employee";
+import { auth } from "../../../../../auth";
+import Payslip from "../payslip";
+import { Payroll } from "../../../../../types/payroll";
+import { Employee } from "../../../../../types/employee";
 
-export default async function Page() {
-
+export default async function Page({
+  params
+}: {
+  params: {
+    id: string;
+  };
+}) {
   const session = await auth() as any;
 
   if (!session && !session?.user) redirect("/login");
@@ -28,6 +33,10 @@ export default async function Page() {
 
   const payroll: Payroll[] = await res.json();
 
+  let payslip = payroll.find(p => p.id === Number(params.id));
+
+  if (!payslip) redirect("/payroll");
+
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
     headers: {
       method: "GET",
@@ -35,16 +44,17 @@ export default async function Page() {
     },
   });
 
+  if (!res2.ok) {
+    throw new Error('Failed to fetch employee data');
+  }
+
   const employees: Employee[] = await res2.json();
 
-  payroll.forEach(pay => {
-    const employee = employees.find(e => e.id === pay.employee_id);
-    pay.employee_name = `${employee?.firstname} ${employee?.lastname}`;
-  });
+  const employee = employees.find(e => e.id === payslip.employee_id);
+
+  payslip.employee_name = `${employee?.firstname} ${employee?.lastname}`;
 
   return (
-    <main className="flex flex-col min-h-screen w-full gap-4">
-      <PayrollList payroll={payroll} />
-    </main>
+    <Payslip payslip={payslip} />
   )
-};
+}
