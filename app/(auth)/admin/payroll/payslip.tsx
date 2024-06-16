@@ -1,5 +1,7 @@
+"use client";
 import { Payroll } from "@/types/payroll";
 import Image from 'next/image';
+
 
 export default function Payslip({
   payslip
@@ -8,6 +10,10 @@ export default function Payslip({
 }) {
   return (
     <div className="max-w-4xl mx-auto p-4 bg-white text-black">
+      <button onClick={() => window.print()} style={{ backgroundColor: '#333f4f' }} className="text-white font-bold py-2 px-4 rounded float-right print-button">
+      Print
+      </button>
+
       <br />
       <div>
 
@@ -38,7 +44,7 @@ export default function Payslip({
             </tr>
             <tr>
               <td className="border px-4 py-2 w-[200px] text-white font-bold" style={{ background: '#333f4f', }}>EMPLOYEE ID</td>
-              <td className="border px-4 py-2 w-[200px]">{payslip.employee_id_number}</td>
+              <td className="border px-4 py-2 w-[200px]">{payslip.employee_id}</td>
 
               <td className="border px-4 py-2 w-[200px] text-white font-bold" style={{ background: '#333f4f', }}>PERIOD END DATE</td>
               <td className="border px-4 py-2 w-[200px]">{payslip.end_date}</td>
@@ -48,7 +54,7 @@ export default function Payslip({
               <td className="border px-4 py-2 w-[200px]">{payslip.employee_name}</td>
 
               <td className="border px-4 py-2 w-[200px] text-white font-bold" style={{ background: '#333f4f', }}>EMPLOYEE POSITION/DEPARTMENT</td>
-              <td className="border px-4 py-2 w-[200px]">{payslip.employee_position}</td>
+              <td className="border px-4 py-2 w-[200px]">Account Manager / Accounting</td>
             </tr>
           </tbody>
         </table>
@@ -112,7 +118,7 @@ export default function Payslip({
           </div>
           <div className="border p-2">
             <p>Withholding Tax</p>
-            <p className="text-right">₱{payslip.tax}</p>
+            <p className="text-right">₱0.00</p>
           </div>
           <div className="border p-2 bg-zinc-100">
             <p className="font-bold">TOTAL DEDUCTIONS</p>
