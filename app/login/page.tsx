@@ -1,15 +1,11 @@
+import { redirect } from "next/navigation";
+import { auth } from "../../auth";
 import LoginForm from "../../components/forms/login-form";
 
 export default async function Page() {
-  const check = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}`, {
-    headers: {
-      method: "GET",
-    },
-  });
+  const session = await auth();
 
-  if (!check.ok) return <main className="flex min-h-screen w-full">
-    <LoginForm />
-  </main>
+  if (session) redirect('/admin');
 
   return <main className="flex min-h-screen w-full">
     <LoginForm />
