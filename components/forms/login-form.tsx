@@ -1,4 +1,4 @@
-import { signIn } from "@/auth"
+import { signIn } from "next-auth/react";
 
 export default function LoginForm() {
     return (
@@ -8,7 +8,7 @@ export default function LoginForm() {
                 await signIn("credentials", {
                     id: formData.get("id"),
                     password: formData.get("password"),
-                    redirectTo: "/",
+                    redirectTo: "/admin",
                 });
             }}>
                 <h2 className="text-2xl font-bold mb-4">Login</h2>
