@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
+import { revalidatePath } from "next/cache";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
@@ -51,6 +52,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user) {
           throw new Error("User not found.")
         }
+
+        revalidatePath('/login');
 
         return user
       },
