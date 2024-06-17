@@ -40,6 +40,4 @@ export async function generateEmployeePayslip(_: FormData, formData: FormData) {
 
     revalidatePath("/admin/payroll");
     redirect(`/admin/payroll/${data?.id}`)
-
-    return data;
 }
