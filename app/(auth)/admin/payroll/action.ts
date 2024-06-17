@@ -39,7 +39,7 @@ export async function generateEmployeePayslip(_: FormData, formData: FormData) {
     const data = await res.json();
 
     revalidatePath("/admin/payroll");
-    redirect(`/admin/payroll/${data.id}`)
+    redirect(`/admin/payroll/${data?.id}`)
 
     return data;
 }
