@@ -1,13 +1,14 @@
 "use client"
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { PiCalendar } from "react-icons/pi";
-import { endOfMonth, startOfMonth, format } from "date-fns";
+import { endOfMonth, startOfMonth, format, set } from "date-fns";
 import { Employee } from "../../../../types/employee";
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { FaSpinner } from "react-icons/fa";
 
 export default function GeneratePayrollModal({
   employees,
@@ -16,6 +17,9 @@ export default function GeneratePayrollModal({
   employees: Employee[];
   accessToken: string;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const modalRef = useRef<HTMLDialogElement>(null);
   const defaultStartDate = format(startOfMonth(new Date()), "yyy-MM-dd");
   const defaultEndDate = format(endOfMonth(new Date()), "yyyy-MM-dd");
@@ -54,6 +58,7 @@ export default function GeneratePayrollModal({
   })
 
   const onSubmit = async (data: any) => {
+    setIsLoading(true);
     const { id, start_date, end_date } = data;
 
     await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}payroll/${id}`, {
@@ -67,12 +72,22 @@ export default function GeneratePayrollModal({
         end_date
       })
     }).then(async (res) => {
-      const { id: payrollId } = await res.json();
-      router.push(window.location.origin + `/admin/payroll/${payrollId}`);
-    }).catch((e) => {
-      window.location.reload();
-    })
+      const { id: payrollId, ...rest } = await res.json();
+      setIsLoading(false);
+      if (payrollId) router.push(window.location.origin + `/admin/payroll/${payrollId}`);
+      else {
+        modalRef?.current?.close();
+        setIsError(true);
+        setErrorMessage(rest.detail);
 
+        // set error to false after 1s
+        await new Promise(resolve => setTimeout(() => {
+          setIsError(false);
+          setErrorMessage("");
+          resolve(true);
+        }, 1000));
+      }
+    })
   }
 
   return (
@@ -115,12 +130,24 @@ export default function GeneratePayrollModal({
             )}
 
             <div className="modal-action">
-              <button type="submit" className="btn btn-success">Generate</button>
+              <button disabled={isLoading} type="submit" className="btn btn-success flex flex-row items-center gap-2">
+                {isLoading && <FaSpinner className="animate-spin" />}
+                Generate
+              </button>
               <button type="button" onClick={() => modalRef?.current?.close()} className="btn btn-error">Cancel</button>
             </div>
           </form>
         </div>
       </dialog>
+      {
+        isError && (
+          <div className="toast z-1000">
+            <div className="alert alert-error">
+              <span>{errorMessage}</span>
+            </div>
+          </div>
+        )
+      }
     </>
   )
 }
