@@ -22,7 +22,6 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ARG DATABASE_URL
 
 RUN bun run build
-RUN bun run db:migrate
 
 # Production image, copy all the files and run next
 FROM base AS runner
