@@ -1,4 +1,5 @@
 import { signIn } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default function LoginForm() {
     return (
@@ -9,6 +10,9 @@ export default function LoginForm() {
                     id: formData.get("id"),
                     password: formData.get("password"),
                     redirectTo: "/admin",
+                    redirect: true
+                }).then(() => {
+                    redirect('/admin')
                 });
             }}>
                 <h2 className="text-2xl font-bold mb-4">Login</h2>
