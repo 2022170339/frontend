@@ -46,7 +46,7 @@ export default async function Page() {
 
   return (
     <main className="flex flex-col min-h-screen w-full gap-4">
-      <PayrollList employees={employees} payroll={payroll} />
+      <PayrollList accessToken={accessToken} employees={employees} payroll={payroll} />
     </main>
   )
 };
