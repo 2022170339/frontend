@@ -48,7 +48,10 @@ export default function EmployeeList({
             <Table
                 employees={employees}
                 selected={selected}
-                onUserSelected={(id) => setSelected(id)}
+                onUserSelected={(id) => {
+                    setSelected(null);
+                    setSelected(id)
+                }}
             />
         </div>
     )
