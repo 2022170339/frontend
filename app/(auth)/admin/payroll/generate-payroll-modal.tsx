@@ -61,16 +61,12 @@ export default function GeneratePayrollModal({
     setIsLoading(true);
     const { id, start_date, end_date } = data;
 
-    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}payroll/${id}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}payroll/${id}?start_date=${start_date}&end_date=${end_date}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${accessToken}`
       },
-      body: JSON.stringify({
-        start_date,
-        end_date
-      })
     }).then(async (res) => {
       const { id: payrollId, ...rest } = await res.json();
       setIsLoading(false);
