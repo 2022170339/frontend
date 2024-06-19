@@ -2,6 +2,10 @@ import { faker } from '@faker-js/faker';
 
 export const adminMenus = [
   {
+    title: 'Profile',
+    href: '/admin/profile'
+  },
+  {
     title: 'Employees',
     href: '/admin/employee'
   },
