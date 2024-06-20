@@ -47,7 +47,7 @@ export default function LoginForm() {
             });
 
             setIsLoading(false);
-            router.push(window.location.origin + "/admin/employee");
+            router.push(window.location.origin + "/admin/profile");
         } catch (e) {
             console.error(e)
             return;
