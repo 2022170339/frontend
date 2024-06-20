@@ -14,11 +14,7 @@ export default async function Page() {
 
   if (!accessToken) redirect("/login");
 
-  const userID = session.user.id;
-
-  const ID = String(userID).slice(-2);
-
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/${ID}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/current`, {
     headers: {
       method: "GET",
       Authorization: `Bearer ${accessToken}`,
@@ -27,9 +23,7 @@ export default async function Page() {
 
   const employee: EmployeeProfile[] = await res.json();
 
-  console.log(employee);
-  console.log(ID);
-
+  
   return (
 
     <div className="container mx-auto p-4 flex justify-center items-center relative">
