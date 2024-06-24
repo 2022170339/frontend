@@ -11,14 +11,21 @@ export default async function Page() {
 
     if (!accessToken) redirect("/login");
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
+    const payload = {
+        method: "GET",
         headers: {
-            method: "GET",
             Authorization: `Bearer ${accessToken}`,
         },
-    });
+    };
 
-    if (!res.ok) return null;
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, payload);
+
+    if (!res.ok) return (
+        <main>
+            <h1>Something went wrong</h1>
+            <pre>{JSON.stringify(await res.json())}</pre>
+        </main>
+    )
 
     const employee = await res.json();
 

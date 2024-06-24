@@ -34,7 +34,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           body: payload.toString()
         });
 
-
         if (!res.ok) {
           throw new Error("Invalid credentials.");
         }
@@ -52,8 +51,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!user) {
           throw new Error("User not found.")
         }
-
-        revalidatePath('/login');
 
         return user
       },

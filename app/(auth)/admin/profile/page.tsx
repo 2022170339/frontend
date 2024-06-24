@@ -21,22 +21,11 @@ export default async function Page() {
     },
   });
 
-  const employees: EmployeeProfile[] = await res.json();
-
-  const employee = employees[0];
-
+  const employee: EmployeeProfile = await res.json();
 
   return (
-
     <div className="container mx-auto p-4 flex justify-center items-center relative">
       <ProfilePage employee={employee} />
     </div>
-
-
-
-
-
-
-
   )
 };

@@ -10,6 +10,7 @@ export default async function Page() {
 
   if (!session && !session?.user) redirect("/login");
 
+
   const accessToken = session.user.access_token;
 
   if (!accessToken) redirect("/login");
@@ -23,11 +24,16 @@ export default async function Page() {
 
   let payroll: Payroll[];
 
-  if (!res.ok) {
-    payroll = [];
-  }
+  if (!res.ok) return (
+    <main>
+      <h1>Something went wrong</h1>
+      <pre>{JSON.stringify(await res.json())}</pre>
+    </main>
+  )
 
   payroll = await res.json();
+
+  console.log(payroll);
 
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
     headers: {
