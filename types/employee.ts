@@ -21,7 +21,6 @@ export type CreateEmployee = {
   lastname: string;
   middlei: string;
   address: string;
-  username: string;
   id_number: number;
   password: string;
   gender: string;
@@ -39,15 +38,6 @@ export type UpdateEmployee = {
   lastname: string;
   middlei: string;
   address: string;
-  id_number: number;
-  password: string;
-  gender: string;
-  birthday: string;
-  phone_number: string;
-  employment_status: string;
-  position: string;
-  supervisor_id: number;
-  basic_salary: number;
 };
 
 export type EmployeeProfile = {

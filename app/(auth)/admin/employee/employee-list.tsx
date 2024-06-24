@@ -10,10 +10,12 @@ import { deleteEmployee } from "./action";
 
 export interface EmployeeListProps {
     employees: Employee[];
+    accessToken: string;
 }
 
 export default function EmployeeList({
-    employees
+    employees,
+    accessToken
 }: EmployeeListProps) {
     const [selected, setSelected] = useState<number | null>(null);
 
@@ -23,22 +25,37 @@ export default function EmployeeList({
         <div suppressHydrationWarning>
             <div className="grid grid-cols-6 w-full items-end justify-end gap-2 sticky top-0 z-10 shadow-md bg-base-100 py-2">
                 <div className="col-span-1">
-                    <AddUserModal lastIdNumber={largestIdNumber + 1} employees={employees} />
+                    <AddUserModal
+                        accessToken={accessToken}
+                        lastIdNumber={largestIdNumber + 1} employees={employees} />
                 </div>
                 {
                     selected && (
                         <>
                             <div className="col-span-1">
                                 <EditUserModal
+                                    accessToken={accessToken}
                                     selectedEmployee={employees.find(employee => employee.id === selected) ?? null}
                                     employees={employees}
                                 />
                             </div>
                             <div className="col-span-1">
                                 <button onClick={async () => {
-                                    await deleteEmployee(selected).then(() => {
-                                        window.location.reload();
+                                    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/${selected}`, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            "Authorization": `Bearer ${accessToken}`
+                                        }
                                     });
+
+                                    if (!res.ok) {
+                                        console.error('Failed to delete employee');
+                                        const error = await res.json();
+                                        console.error(error);
+                                    }
+
+                                    window.location.reload();
                                 }} className="btn btn-error w-full btn-xs">Delete User</button>
                             </div>
                         </>
@@ -50,7 +67,9 @@ export default function EmployeeList({
                 selected={selected}
                 onUserSelected={(id) => {
                     setSelected(null);
-                    setSelected(id)
+                    setTimeout(() => {
+                        setSelected(id)
+                    }, 200);
                 }}
             />
         </div>

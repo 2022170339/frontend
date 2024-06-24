@@ -30,6 +30,6 @@ export default async function Page() {
     const employee = await res.json();
 
     return <main className="flex flex-col min-h-screen w-full gap-4">
-        <EmployeeList employees={employee} />
+        <EmployeeList accessToken={accessToken} employees={employee} />
     </main>
 }
