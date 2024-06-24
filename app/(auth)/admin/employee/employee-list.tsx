@@ -5,7 +5,6 @@ import AddUserModal from "./add-user-modal";
 import Table from "./table";
 import { Employee } from "../../../../types/employee";
 import EditUserModal from "./edit-user-modal";
-import { deleteEmployee } from "./action";
 
 
 export interface EmployeeListProps {
