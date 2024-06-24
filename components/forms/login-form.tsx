@@ -46,6 +46,13 @@ export default function LoginForm() {
                 password,
             });
 
+            console.log(res);
+
+            if (!res) {
+                setIsLoading(false);
+                return;
+            }
+
             setIsLoading(false);
             router.push(window.location.origin + "/admin/profile");
         } catch (e) {

@@ -12,8 +12,8 @@ export default async function Page() {
     if (!accessToken) redirect("/login");
 
     const payload = {
-        method: "GET",
         headers: {
+            method: "GET",
             Authorization: `Bearer ${accessToken}`,
         },
     };
@@ -28,6 +28,8 @@ export default async function Page() {
     )
 
     const employee = await res.json();
+
+    console.log(employee);
 
     return <main className="flex flex-col min-h-screen w-full gap-4">
         <EmployeeList employees={employee} />

@@ -18,7 +18,7 @@ export default async function Page() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}payroll`, {
     headers: {
       method: "GET",
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbXBsb3llZV9pZCI6MSwiZXhwIjoxNzE5NDcxMjY4fQ.4ste4IX5KV4S1aMQFmVJDUChK0kJlOK5k-GVjrMwvhI`,
     },
   });
 
