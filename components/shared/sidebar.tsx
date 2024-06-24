@@ -44,7 +44,6 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                         </Link>
                     </li>
                 </ul>
-
             </div>
         </div >
     )
