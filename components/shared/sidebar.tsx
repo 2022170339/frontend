@@ -33,9 +33,19 @@ export default function Sidebar({ children }: { children: React.ReactNode }) {
                         </li>
 
                     ))}
+                    <li>
+                        <Link href={"/api/auth/signout"}>
+                            <div className="flex items-center">
+                                <div className="icon">
+                                    <i className="fas fa-home"></i>
+                                </div>
+                                <span className="ml-2">Logout</span>
+                            </div>
+                        </Link>
+                    </li>
                 </ul>
 
             </div>
-        </div>
+        </div >
     )
 }
