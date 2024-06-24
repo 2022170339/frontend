@@ -12,8 +12,8 @@ export default async function Page() {
     if (!accessToken) redirect("/login");
 
     const payload = {
+        method: "GET",
         headers: {
-            method: "GET",
             Authorization: `Bearer ${accessToken}`,
         },
     };
