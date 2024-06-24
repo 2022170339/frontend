@@ -39,8 +39,6 @@ export async function createEmployee(_: FormData, formData: FormData) {
         body: JSON.stringify(current)
     })
 
-    console.log(JSON.stringify(res));
-
     if (!res.ok) throw new Error("An error occurred while creating an employee");
 
     const data = await res.json();
@@ -76,8 +74,6 @@ export async function updateEmployee(_: FormData, formData: FormData) {
         supervisor_id: parseInt(formData.get("supervisor_id") as unknown as string) as number,
         basic_salary: parseInt(formData.get("basic_salary") as unknown as string) as number,
     }
-
-    console.log(current);
 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee/${id}`, {
         method: "PUT",
@@ -116,13 +112,9 @@ export async function deleteEmployee(id: number) {
         }
     })
 
-    console.log(res);
-
     if (!res.ok) throw new Error("An error occurred while deleting an employee");
 
     const data = await res.json();
-
-    console.log(JSON.stringify(data));
 
     revalidatePath("/admin/employee");
 

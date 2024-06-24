@@ -20,8 +20,6 @@ export default function PayrollList({
 
   const router = useRouter();
 
-  console.log(accessToken);
-
   return (
     <div className="flex flex-col w-full min-h-screen" suppressHydrationWarning>
       <div className="grid grid-cols-6 w-full items-end justify-end gap-2 sticky top-0 z-10 shadow-md bg-base-100 py-2 mb-2">

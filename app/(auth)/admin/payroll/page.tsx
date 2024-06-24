@@ -33,8 +33,6 @@ export default async function Page() {
 
   payroll = await res.json();
 
-  console.log(payroll);
-
   const res2 = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL!}employee`, {
     headers: {
       method: "GET",

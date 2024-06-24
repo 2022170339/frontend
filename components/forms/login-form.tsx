@@ -46,8 +46,6 @@ export default function LoginForm() {
                 password,
             });
 
-            console.log(res);
-
             if (!res) {
                 setIsLoading(false);
                 return;
