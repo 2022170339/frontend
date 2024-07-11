@@ -10,6 +10,7 @@ import { z } from "zod";
 
 export default function LoginForm() {
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
     const loginSchema = z.object({
@@ -37,6 +38,7 @@ export default function LoginForm() {
     })
 
     const onSubmit = async (data: any) => {
+        setError(null);
         setIsLoading(true);
         const { id, password } = data
 
@@ -47,6 +49,7 @@ export default function LoginForm() {
             });
 
             if (!res) {
+                setError("Invalid Credentials!")
                 setIsLoading(false);
                 return;
             }
@@ -55,6 +58,8 @@ export default function LoginForm() {
             router.push(window.location.origin + "/admin/profile");
         } catch (e) {
             console.error(e)
+            setError("Invalid Credentials!")
+            setIsLoading(false);
             return;
         }
     }
@@ -69,7 +74,7 @@ export default function LoginForm() {
                     </label>
                     <input {...register('id')} type="text" className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline text-center" placeholder="Employee ID" required />
                 </div>
-                <div className="mb-6">
+                <div>
                     <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                         Password
                     </label>
@@ -84,7 +89,13 @@ export default function LoginForm() {
                         }
                     </>
                 )}
-                <div className="flex items-center justify-center">
+                {
+                    error && (
+                        <p className="mx-auto py-2 text-red-500 text-sm text-center font-bold italic">{error}</p>
+                    )
+                }
+
+                <div className="flex items-center justify-center mt-6">
                     <button disabled={isLoading} className="flex flex-row gap-2 items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         {isLoading && <FaSpinner className="animate-spin" />}
                         Login
